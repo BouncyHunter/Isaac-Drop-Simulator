@@ -1,0 +1,49 @@
+div {
+  margin: 0px;
+  display: block;
+}
+.title {
+  display: inline;
+  font-family: sans-serif;
+  font-size: 40px;
+  width: 50%;
+  margin: 20px;
+}
+.right {
+  font-family: sans-serif;
+  display: flex;
+  float: right;
+  margin: 8px;
+  font-size: 22px;
+}
+#header {
+  height: 60px;
+  width: 80%;
+  margin: 0 auto;
+  background-color: #F5F5F5;
+  box-shadow: 5px 5px 2px #888888;
+}
+#main {
+  display: block;
+  margin: 0px 0px 10px 0px;
+}
+.hasItem {
+  text-align: center;
+  font-size: 20px;
+  margin: 10px;
+}
+#simulate {
+  display: block;
+  width: 20%;
+  height: 30px;
+  margin: 0 auto;
+}
+#result {
+  font-family: monospace;
+  font-size: 20px;
+  background-color: #FFFFF0;
+  display: block;
+  width: 20%;
+  margin: 0 auto;
+  box-shadow: 0px 0px 4px #888888;
+}
