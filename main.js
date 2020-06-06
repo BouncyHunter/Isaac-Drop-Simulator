@@ -11,8 +11,17 @@ $(document).ready(function(){
   const PICKUP = {'NULL': 0, 'TRINKET': 1, 'CARD': 2, 'PILL': 3, 'COIN': 4,
                   'HEART': 5, 'KEY': 6, 'BOMB': 7, 'CHEST': 8, 'BATTERY': 9,
                   'BAG': 10, 'LOCKEDCHEST': 11}
-  const PUKCIP = ['null', 'trinket', 'card', 'pill', 'coin', 'heart', 'key',
-                  'bomb', 'chest', 'battery', 'bag', 'lockedchest']
+  const PUKCIP = ['Null', 'Trinket', 'Card', 'Pill', 'Coin', 'Heart', 'Key',
+                  'Bomb', 'Chest', 'Battery', 'Bag', 'Lockedchest'];
+  let cnvs = $('#result')[0].getContext('2d');
+  let chart = new Chart(cnvs, {
+    type: 'bar',
+
+    data: {
+    datasets: [],
+    labels: PUKCIP,
+  }
+  })
   $("#simulate").click(function(){
     $('#result').show()
     $('#result')[0].innerHTML = 'Calculating...'
@@ -29,8 +38,8 @@ $(document).ready(function(){
 
     itemsNum['Luck'] = Math.min(10, Math.max(itemsNum['Luck'], 0))
     //console.log(itemsNum)
-    let sum = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    let sum_p1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    let sum = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    let sum_p1 = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     for(i = 0; i < 10000; i ++) {
       let rngPool = 0
       let score = Math.random()
@@ -139,18 +148,31 @@ $(document).ready(function(){
       }
 
     }
-    $('#result')[0].innerHTML = 'Done.<br>';
+    //$('#result')[0].innerHTML = 'Done.<br>';
     for(i = 0;i < sum.length;i ++) {
-      if(sum[i] > 0) {
-        $('#result')[0].innerHTML += '<br>' + sum[i] / 100.0 + '% ' +
-                                    (itemsNum['ContractFromBelow'] + 1) +
-                                    ' ' + PUKCIP[i]
-      }
-      if(sum_p1[i] > 0) {
-        $('#result')[0].innerHTML += '<br>' + sum_p1[i] / 100.0 + '% ' +
-                                    (itemsNum['ContractFromBelow'] + 2) +
-                                    ' ' + PUKCIP[i]
-      }
+      sum[i] = sum[i] / 10000.0;
+      sum_p1[i] = sum_p1[i] / 10000.0;
     }
+    console.log(sum);
+    chart.data.datasets =
+    [{
+      label:(itemsNum['ContractFromBelow'] + 1) + ' Drops',
+      backgroundColor:'rgba(135,206,250,0.5)',
+      borderColor:'rgba(0,191,255,0.9)',
+      borderWidth:'1',
+      data: sum,
+    }]
+    if(hasItems['BrokenModem']) {
+      chart.data.datasets.push({
+        label:(itemsNum['ContractFromBelow'] + 2) + ' Drops',
+        backgroundColor:'rgba(255,69,0,0.5)',
+        borderColor:'rgba(255,69,0,9)',
+        borderWidth:'1',
+        data: sum_p1,
+      });
+    };
+    chart.update();
+
+
   });
 });
